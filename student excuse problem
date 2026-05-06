@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <random>
+
+using namespace std;
+
+int main() {
+    string name;
+
+    // Heading
+    cout << "=====================================\n";
+    cout << "     STUDENT EXCUSE GENERATOR \n";
+    cout << "=====================================\n\n";
+
+    // Input
+    cout << "Enter your name: ";
+    getline(cin, name);
+
+    // Handle empty input
+    if (name.empty()) {
+        cout << "\n⚠ Error: Name cannot be empty.\n";
+        cout << "Please run the program again.\n";
+        return 0;
+    }
+
+    // Excuses list
+    vector<string> excuses = {
+        "{name} couldn’t finish the assignment because the laptop updated forever.",
+        "{name} was about to submit homework when Wi-Fi disappeared.",
+        "{name}'s pet pressed random keys and submitted something else.",
+        "{name} opened the assignment but got distracted instantly.",
+        "{name} forgot to save the file and the system crashed.",
+        "{name} was researching so deeply that time forgot about {name}.",
+        "{name} waited for motivation… it never came.",
+        "{name} thought today was Sunday (it was not).",
+        "{name} tried to focus but got distracted by everything.",
+        "{name} was debugging life instead of homework.",
+        "{name}'s brain went into power-saving mode.",
+        "{name} was about to start but needed a snack break first.",
+        "{name} spent more time planning than actually doing the work.",
+        "{name} blinked and suddenly it was too late.",
+        "{name} got stuck in a loop of '5 more minutes'."
+    };
+
+    // Random generator
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dist(0, excuses.size() - 1);
+
+    string selectedExcuse = excuses[dist(gen)];
+
+    // Replace {name}
+    size_t pos = 0;
+    while ((pos = selectedExcuse.find("{name}", pos)) != string::npos) {
+        selectedExcuse.replace(pos, 6, name);
+        pos += name.length();
+    }
+
+    //  Clean Output
+    cout << "\n-------------------------------------\n";
+    cout << " Your Generated Excuse:\n";
+    cout << "-------------------------------------\n\n";
+
+    cout << " " << selectedExcuse << "\n\n";
+
+    cout << "-------------------------------------\n";
+    cout << " Thank you for using the generator!\n";
+    cout << "-------------------------------------\n";
+
+    return 0;
+}
