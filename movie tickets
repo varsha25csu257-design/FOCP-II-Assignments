@@ -1,0 +1,103 @@
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+using namespace std;
+
+class MovieTicket {
+    private :
+    // movieID -> set of customerIDs who booked
+    unordered_map<int, unordered_set<int>> booked;
+    // movieID -> number of booked tickets
+     unordered_map<int, int> seats;
+     const int MAX_TICKETS = 100;
+
+     public :
+    // BOOK X Y
+     bool book(int X, int Y) {
+
+        // If already booked
+        if (booked[Y].count(X)) {
+            return false;
+        }
+
+        // If movie is full
+        if (seats[Y] >= MAX_TICKETS) {
+            return false;
+        }
+
+        // Book ticket
+        booked[Y].insert(X);
+        seats[Y]++;
+
+        return true;
+    }
+
+    // CANCEL X Y
+    bool cancel(int X, int Y) {
+
+        // If not booked
+        if (!booked[Y].count(X)) {
+            return false;
+        }
+
+        // Cancel ticket
+        booked[Y].erase(X);
+        seats[Y]--;
+
+        return true;
+    }
+
+    // IS_BOOKED X Y
+    bool isBooked(int X, int Y) {
+
+        return booked[Y].count(X);
+    }
+
+    // AVAILABLE_TICKETS Y
+    int availableTickets(int Y) {
+
+        return MAX_TICKETS - seats[Y];
+    }
+};
+
+int main(){
+    int Q;
+    cin >> Q;
+
+    MovieTicket mt;
+
+    while (Q--) {
+        string query;
+        cin >> query;
+
+        if (query == "BOOK") {
+            int X, Y;
+            cin >> X >> Y;
+
+            cout << (mt.book(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "CANCEL") {
+            int X, Y;
+            cin >> X >> Y;
+
+            cout << (mt.cancel(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "IS_BOOKED") {
+            int X, Y;
+            cin >> X >> Y;
+
+            cout << (mt.isBooked(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "AVAILABLE_TICKETS") {
+            int Y;
+            cin >> Y;
+
+            cout << mt.availableTickets(Y) << endl;
+        }
+    }
+
+    return 0;
+}
