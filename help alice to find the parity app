@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+// Function to calculate XOR from 1 to n
+long long xorUpto(long long n) {
+    if (n % 4 == 0) return n;
+    else if (n % 4 == 1) return 1;
+    else if (n % 4 == 2) return n + 1;
+    else return 0;
+}
+
+int main() {
+    long long L, R;
+    
+    // Input
+    cin >> L >> R;
+
+    // XOR from L to R
+    long long result = xorUpto(R) ^ xorUpto(L - 1);
+
+    // Check even or odd
+    if (result % 2 == 0) {
+        cout << "even" << endl;
+    } else {
+        cout << "odd" << endl;
+    }
+
+    return 0;
+}
