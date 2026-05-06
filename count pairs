@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to count distinct prime factors
+int countDistinctPrimes(long long n) {
+    int count = 0;
+
+    for (long long i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            count++;
+            while (n % i == 0) {
+                n /= i;
+            }
+        }
+    }
+
+    // if n is still > 1, it's a prime
+    if (n > 1) count++;
+
+    return count;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int T;
+    cin >> T;
+
+    while (T--) {
+        long long n;
+        cin >> n;
+
+        int k = countDistinctPrimes(n);
+
+        // 2^k
+        long long result = 1LL << k;
+
+        cout << result << "\n";
+    }
+
+    return 0;
+}
