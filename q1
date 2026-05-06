@@ -1,0 +1,24 @@
+#include<iostream>
+#include <string>
+#include<cmath>
+#include <cctype>
+using namespace std;
+
+int main(){
+
+// Q1).
+
+    //declare variable to store three numbers
+    float num1, num2, num3;
+    
+    //ask the user to enter three numbers 
+    cout<<"enter three numbers :";
+    cin>>num1>>num2>>num3;
+
+    //calculate the average
+    float average = (num1 + num2 + num3)/3.0;
+
+    //display the result
+    cout<<"the average of the three marks is :"<<average<<endl;
+
+}
