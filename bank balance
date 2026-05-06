@@ -1,0 +1,92 @@
+#include <iostream>
+#include <unordered_map>
+#include <string>
+using namespace std;
+
+class Bank {
+private:
+    unordered_map<string, int> users; // stores userID -> balance
+
+public:
+
+    // CREATE X Y
+    bool create(string X, int Y) {
+        if (users.find(X) == users.end()) { // user not present
+            users[X] = Y; // create new user
+            return true;
+        } else {
+            users[X] += Y; // add money if already exists
+            return false;
+        }
+    }
+
+    // DEBIT X Y
+    bool debit(string X, int Y) {
+        if (users.find(X) == users.end()) return false; // user not found
+
+        if (users[X] < Y) return false; // insufficient balance
+
+        users[X] -= Y; // deduct money
+        return true;
+    }
+
+    // CREDIT X Y
+    bool credit(string X, int Y) {
+        if (users.find(X) == users.end()) return false; // user not found
+
+        users[X] += Y; // add money
+        return true;
+    }
+
+    // BALANCE X
+    int balance(string X) {
+        if (users.find(X) == users.end()) return -1; // user not found
+
+        return users[X]; // return balance
+    }
+};
+
+int main() {
+    int Q;
+    cin >> Q; // number of queries
+
+    Bank bank; // object of Bank class
+
+    while (Q--) {
+        string query;
+        cin >> query;
+
+        if (query == "CREATE") {
+            string X;
+            int Y;
+            cin >> X >> Y;
+
+            cout << (bank.create(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "DEBIT") {
+            string X;
+            int Y;
+            cin >> X >> Y;
+
+            cout << (bank.debit(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "CREDIT") {
+            string X;
+            int Y;
+            cin >> X >> Y;
+
+            cout << (bank.credit(X, Y) ? "true" : "false") << endl;
+        }
+
+        else if (query == "BALANCE") {
+            string X;
+            cin >> X;
+
+            cout << bank.balance(X) << endl;
+        }
+    }
+
+    return 0;
+}
