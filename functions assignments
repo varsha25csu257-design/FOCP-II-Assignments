@@ -1,0 +1,148 @@
+/*
+We are making a console program that stores students, their marks
+, calculates average, grade, pass/fail, and shows reports — using only arrays and functions.
+*/
+
+#include <iostream>
+using namespace std;
+
+const int MAX_STUDENTS = 50;
+const int MAX_SUBJECTS = 10;
+
+/* Function Declarations */
+void addStudent(int ids[], string names[], int &count);
+int searchStudent(int ids[], int count, int id);
+void enterMarks(int marks[][MAX_SUBJECTS], int index, int subjects);
+void viewStudent(int ids[], string names[], int marks[][MAX_SUBJECTS],
+                 int count, int subjects);
+float studentAverage(int marks[][MAX_SUBJECTS], int index, int subjects);
+
+int main() {
+
+    int ids[MAX_STUDENTS];
+    string names[MAX_STUDENTS];
+    int marks[MAX_STUDENTS][MAX_SUBJECTS];
+
+    int count = 0;
+    int subjects;
+
+    cout << "Enter number of subjects: ";
+    cin >> subjects;
+
+    int mainChoice, subChoice;
+
+    do {
+        cout << "\n--- MAIN MENU ---\n";
+        cout << "1. Student Operations\n";
+        cout << "2. Exit\n";
+        cout << "Enter choice: ";
+        cin >> mainChoice;
+
+        if(mainChoice == 1) {
+
+            do {
+                cout << "\n-- Student Menu --\n";
+                cout << "1. Add Student\n";
+                cout << "2. Enter Marks\n";
+                cout << "3. View Student\n";
+                cout << "4. Back\n";
+                cout << "Enter choice: ";
+                cin >> subChoice;
+
+                if(subChoice == 1)
+                    addStudent(ids, names, count);
+
+                else if(subChoice == 2) {
+                    int id;
+                    cout << "Enter ID: ";
+                    cin >> id;
+
+                    int index = searchStudent(ids, count, id);
+                    if(index != -1)
+                        enterMarks(marks, index, subjects);
+                    else
+                        cout << "Student not found!\n";
+                }
+
+                else if(subChoice == 3)
+                    viewStudent(ids, names, marks, count, subjects);
+
+            } while(subChoice != 4);
+        }
+
+    } while(mainChoice != 2);
+
+    return 0;
+}
+
+/* -------- FUNCTIONS -------- */
+
+void addStudent(int ids[], string names[], int &count) {
+    if(count >= MAX_STUDENTS) {
+        cout << "Limit reached!\n";
+        return;
+    }
+
+    cout << "Enter ID: ";
+    cin >> ids[count];
+
+    cout << "Enter Name: ";
+    cin >> names[count];
+
+    count++;
+    cout << "Student Added!\n";
+}
+
+int searchStudent(int ids[], int count, int id) {
+    for(int i = 0; i < count; i++) {
+        if(ids[i] == id)
+            return i;
+    }
+    return -1;
+}
+
+void enterMarks(int marks[][MAX_SUBJECTS], int index, int subjects) {
+    for(int i = 0; i < subjects; i++) {
+        cout << "Enter marks for Subject " << i+1 << ": ";
+        cin >> marks[index][i];
+    }
+}
+
+float studentAverage(int marks[][MAX_SUBJECTS], int index, int subjects) {
+    int sum = 0;
+    for(int i = 0; i < subjects; i++)
+        sum += marks[index][i];
+
+    return (float)sum / subjects;
+}
+
+void viewStudent(int ids[], string names[], int marks[][MAX_SUBJECTS],
+                 int count, int subjects) {
+
+    int id;
+    cout << "Enter ID: ";
+    cin >> id;
+
+    int index = searchStudent(ids, count, id);
+
+    if(index == -1) {
+        cout << "Student not found!\n";
+        return;
+    }
+
+    cout << "\nID: " << ids[index];
+    cout << "\nName: " << names[index];
+
+    cout << "\nMarks: ";
+    for(int i = 0; i < subjects; i++)
+        cout << marks[index][i] << " ";
+
+    float avg = studentAverage(marks, index, subjects);
+
+    cout << "\nAverage: " << avg;
+
+    if(avg >= 40)
+        cout << "\nResult: PASS\n";
+    else
+        cout << "\nResult: FAIL\n";
+}
