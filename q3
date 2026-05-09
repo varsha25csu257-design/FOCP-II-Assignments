@@ -1,0 +1,37 @@
+#include<iostream>
+#include <string>
+#include<cmath>
+#include <cctype>
+using namespace std;
+int main(){
+    int choice;
+    float temp, converted;
+
+    cout<<"temperature converter\n";
+    cout<<"1. Fahrenheit to celsius\n";
+    cout<<"2. Celsius to fahrenheit\n";
+    cout<<"enter your choice(1 or 2):";
+    cin>>choice;
+
+    if(choice == 1){
+        cout<<"enter temperature in fahrenheit:";
+        cin>>temp;
+
+        // converting fahrenheit to celsius 
+        converted = (temp - 32.0f)*5.0f/9.0f;
+        cout<<temp<<"degree f is"<<converted<<"degree c"<<endl;
+    }
+
+    else if(choice == 2){
+        cout<<"enter temperature in celsius:";
+        cin>>temp;
+
+        // converting celsius to fahrenheit
+        converted = (temp*9.0f/5.0f) + 32.0f;
+        cout<<temp<<"degree c is"<<converted<<"degree f"<<endl;
+    }
+
+    else{
+        cout<<"invalid choice !\n";
+    }
+}
