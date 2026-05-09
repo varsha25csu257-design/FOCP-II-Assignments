@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main() {
+
+    // Header Design
+    cout << "========================================\n";
+    cout << "     🔥😈 FUNNY ROAST GENERATOR 😈🔥     \n";
+    cout << "========================================\n\n";
+
+    // Input
+    string name;
+    cout << "👉 Enter your name: ";
+    getline(cin, name);
+
+    // Check for empty or spaces-only input
+    bool isEmpty = true;
+    for (char ch : name) {
+        if (!isspace(ch)) {
+            isEmpty = false;
+            break;
+        }
+    }
+
+    if (isEmpty) {
+        cout << "\n⚠️  Error: Name cannot be empty or just spaces!\n";
+        cout << "🚫 Please run the program again.\n";
+        return 0;
+    }
+
+    // Roast templates (added new creative ones ⭐)
+    vector<string> roasts = {
+        "{name}, you're not stupid... you just have bad luck thinking.",
+        "{name}, if laziness were a subject, you'd top the class.",
+        "{name}, even Wi-Fi signals avoid you.",
+        "{name}, your brain has too many tabs open... and none are loading.",
+        "{name}, you bring everyone joy... when you leave the room.",
+        "{name}, you're like a cloud. When you disappear, it's a beautiful day.",
+        "{name}, even Google can't understand your logic.",
+        "{name}, your secrets are safe… because no one listens to you.",
+        "{name}, you have something on your chin… no, the third one down.",
+        "{name}, if overthinking burned calories, you'd be invisible.",
+
+        // ⭐ New creative roasts
+        "{name}, your phone battery lasts longer than your attention span.",
+        "{name}, you’re proof that even evolution takes breaks.",
+        "{name}, if brains were taxed, you’d get a full refund."
+    };
+
+    // Random setup
+    srand(time(0));
+    int randomIndex = rand() % roasts.size();
+
+    string selectedRoast = roasts[randomIndex];
+
+    // Replace ALL occurrences of {name}
+    size_t pos = selectedRoast.find("{name}");
+    while (pos != string::npos) {
+        selectedRoast.replace(pos, 6, name);
+        pos = selectedRoast.find("{name}", pos + name.length());
+    }
+
+    // Output Design
+    cout << "\n----------------------------------------\n";
+    cout << "🎯 Your Roast is Ready!\n";
+    cout << "----------------------------------------\n\n";
+
+    cout << "💬 " << selectedRoast << "\n\n";
+
+    cout << "========================================\n";
+    cout << "😂 Thanks for trying it out!\n";
+    cout << "========================================\n";
+
+    return 0;
+}
